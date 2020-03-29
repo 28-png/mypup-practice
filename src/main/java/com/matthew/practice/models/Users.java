@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class Users {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(nullable = false, unique = true)
+@Column(nullable = false, unique = true, columnDefinition = "INT(10) UNSIGNED")
 private long id;
 @Column(nullable = false, name = "user_role")
 private String userRole;
@@ -28,10 +29,12 @@ private String city;
 private String state;
 @Column(columnDefinition = "VARCHAR(12)")
 private String zipcode;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<DogPost> dogPost;
 
     public Users() {}
 
-    public Users(String userRole, String username, String password, String email, String phoneNumber, String city, String state, String zipcode) {
+    public Users(String userRole, String username, String password, String email, String phoneNumber, String city, String state, String zipcode, List<DogPost> dogPost) {
         this.userRole = userRole;
         this.username = username;
         this.password = password;
@@ -40,7 +43,16 @@ private String zipcode;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
+        this.dogPost = dogPost;
     }
+    public List<DogPost> getDogPost() {
+        return dogPost;
+    }
+
+    public void setDogPost(List<DogPost> dogPost) {
+        this.dogPost = dogPost;
+    }
+
 
     public long getId() {
         return id;
