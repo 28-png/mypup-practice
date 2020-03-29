@@ -1,9 +1,5 @@
 package com.matthew.practice.models;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -29,10 +25,8 @@ private String city;
 private String state;
 @Column(columnDefinition = "VARCHAR(12)")
 private String zipcode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DogPost> dogPost;
-
-    public Users() {}
 
     public Users(String userRole, String username, String password, String email, String phoneNumber, String city, String state, String zipcode, List<DogPost> dogPost) {
         this.userRole = userRole;
@@ -48,6 +42,9 @@ private String zipcode;
     public List<DogPost> getDogPost() {
         return dogPost;
     }
+
+    public Users() {}
+
 
     public void setDogPost(List<DogPost> dogPost) {
         this.dogPost = dogPost;

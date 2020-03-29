@@ -1,5 +1,4 @@
 package com.matthew.practice.models;
-
 import javax.persistence.*;
 
 @Entity
@@ -17,11 +16,9 @@ private String dogGroup;
 private String dogDescription;
 @Column(columnDefinition = "VARCHAR(45)", name = "dog_price")
 private String dogPrice;
-@ManyToOne
+@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 @JoinColumn(name="user_id")
 private Users user;
-
-    public DogPost() {}
 
     public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice, Users user) {
         this.dogBreed = dogBreed;
@@ -30,6 +27,8 @@ private Users user;
         this.dogPrice = dogPrice;
         this.user = user;
     }
+    public DogPost() {}
+
 
     public long getId() {
         return id;
