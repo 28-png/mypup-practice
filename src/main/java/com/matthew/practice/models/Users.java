@@ -7,7 +7,7 @@ import java.util.List;
 public class Users {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(nullable = false, unique = true, columnDefinition = "INT(10) UNSIGNED")
+@Column(nullable = false, columnDefinition = "INT(10) UNSIGNED")
 private long id;
 @Column(nullable = false, name = "user_role")
 private String userRole;
@@ -25,7 +25,8 @@ private String city;
 private String state;
 @Column(columnDefinition = "VARCHAR(12)")
 private String zipcode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//            , orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DogPost> dogPost;
 
     public Users(String userRole, String username, String password, String email, String phoneNumber, String city, String state, String zipcode, List<DogPost> dogPost) {
@@ -122,4 +123,10 @@ private String zipcode;
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
+
+    public static void main(String[] args) {
+        System.out.println(org.hibernate.Version.getVersionString());
+    }
+
+
 }

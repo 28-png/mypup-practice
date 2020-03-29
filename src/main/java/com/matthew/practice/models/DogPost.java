@@ -8,7 +8,7 @@ public class DogPost {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Column(nullable = false, columnDefinition = "INT(10) UNSIGNED")
 private long id;
-@Column(columnDefinition = "VARCHAR(200) UNSIGNED", name = "dog_breed")
+@Column(columnDefinition = "VARCHAR(200)", name = "dog_breed")
 private String dogBreed;
 @Column(nullable = false, columnDefinition = "VARCHAR(200)", name = "dog_group")
 private String dogGroup;
@@ -16,16 +16,17 @@ private String dogGroup;
 private String dogDescription;
 @Column(columnDefinition = "VARCHAR(45)", name = "dog_price")
 private String dogPrice;
-@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+@ManyToOne
+//        (fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 @JoinColumn(name="user_id")
 private Users user;
 
-    public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice, Users user) {
+    public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice) {
         this.dogBreed = dogBreed;
         this.dogGroup = dogGroup;
         this.dogDescription = dogDescription;
         this.dogPrice = dogPrice;
-        this.user = user;
+//        this.user = user;
     }
     public DogPost() {}
 
