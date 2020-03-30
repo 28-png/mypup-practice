@@ -1,5 +1,6 @@
 package com.matthew.practice.models;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "dog_posts")
@@ -21,14 +22,32 @@ private String dogPrice;
 @JoinColumn(name="user_id")
 private Users user;
 
-    public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice) {
+@ManyToMany(cascade = CascadeType.ALL)
+@JoinTable(
+name="dog_post_has_breed",
+joinColumns={@JoinColumn(name="dog_post_id")},
+inverseJoinColumns={@JoinColumn(name="breed_id")}
+)
+private List<Breed> breeds;
+
+    public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice, Users user, List<Breed> breeds) {
         this.dogBreed = dogBreed;
         this.dogGroup = dogGroup;
         this.dogDescription = dogDescription;
         this.dogPrice = dogPrice;
-//        this.user = user;
+        this.breeds = breeds;
+        this.user = user;
     }
     public DogPost() {}
+
+    public List<Breed> getBreeds() {
+        return breeds;
+    }
+
+    public void setBreeds(List<Breed> breeds) {
+        this.breeds = breeds;
+    }
+
 
 
     public long getId() {
