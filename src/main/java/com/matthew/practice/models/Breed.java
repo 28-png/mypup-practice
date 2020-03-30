@@ -14,15 +14,29 @@ private long id;
 private String name;
 @ManyToMany(mappedBy = "breeds")
 private List<DogPost> dogPosts;
-
+@ManyToMany(cascade = CascadeType.ALL)
+@JoinTable(
+name="favorites",
+joinColumns={@JoinColumn(name="breed_id")},
+inverseJoinColumns={@JoinColumn(name="user_id")}
+)
+private List<Users> users;
 
 public Breed() {}
 
-public Breed(String name, List<DogPost> dogPosts) {
+public Breed(String name, List<DogPost> dogPosts, List<Users> users) {
     this.name = name;
     this.dogPosts = dogPosts;
+    this.users = users;
 }
 
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
+    }
 
     public List<DogPost> getDogPosts() {
         return dogPosts;

@@ -24,11 +24,21 @@ private String city;
 private String state;
 @Column(columnDefinition = "VARCHAR(12)")
 private String zipcode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 //            , orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<DogPost> dogPost;
+private List<DogPost> dogPost;
+@ManyToMany(mappedBy = "users")
+private List<Breed> breeds;
 
-    public Users(String userRole, String username, String password, String email, String phoneNumber, String city, String state, String zipcode, List<DogPost> dogPost) {
+    public List<Breed> getBreeds() {
+        return breeds;
+    }
+
+    public void setBreeds(List<Breed> breeds) {
+        this.breeds = breeds;
+    }
+
+    public Users(String userRole, String username, String password, String email, String phoneNumber, String city, String state, String zipcode, List<DogPost> dogPost, List<Breed> breeds) {
         this.userRole = userRole;
         this.username = username;
         this.password = password;
@@ -38,6 +48,7 @@ private String zipcode;
         this.state = state;
         this.zipcode = zipcode;
         this.dogPost = dogPost;
+        this.breeds = breeds;
     }
     public List<DogPost> getDogPost() {
         return dogPost;
