@@ -21,7 +21,6 @@ private String dogPrice;
 //        (fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 @JoinColumn(name="user_id")
 private Users user;
-
 @ManyToMany(cascade = CascadeType.ALL)
 @JoinTable(
 name="dog_post_has_breed",
@@ -29,15 +28,29 @@ joinColumns={@JoinColumn(name="dog_post_id")},
 inverseJoinColumns={@JoinColumn(name="breed_id")}
 )
 private List<Breed> breeds;
+@ManyToMany(mappedBy = "dogPosts")
+private List<Images> images;
 
-    public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice, Users user, List<Breed> breeds) {
+
+
+    public DogPost(String dogBreed, String dogGroup, String dogDescription, String dogPrice, Users user, List<Breed> breeds, List<Images> images) {
         this.dogBreed = dogBreed;
         this.dogGroup = dogGroup;
         this.dogDescription = dogDescription;
         this.dogPrice = dogPrice;
         this.breeds = breeds;
         this.user = user;
+        this.images = images;
     }
+
+    public List<Images> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Images> images) {
+        this.images = images;
+    }
+
     public DogPost() {}
 
     public List<Breed> getBreeds() {
